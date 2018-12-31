@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/appBar"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@null">
+
+    <com.sevencats.movelist20.Utils.MotionToolBar
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
+        android:minHeight="50dp"
+        android:background="@drawable/toolbar_bg"
+        app:layoutDescription="@xml/tool_bar_scene"
+        app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
+
+        <View
+            android:id="@+id/toolBarBG"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:id="@+id/settings_btn"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:src="@drawable/ic_settings_24dp"/>
+
+        <ImageView
+            android:id="@+id/mail_btn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_email_24dp"/>
+
+        <ImageView
+            android:id="@+id/analytics_btn"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:transitionName="image"
+            android:src="@drawable/ic_analytics_24dp"/>
+
+    </com.sevencats.movelist20.Utils.MotionToolBar>
+
+</android.support.design.widget.AppBarLayout>
+

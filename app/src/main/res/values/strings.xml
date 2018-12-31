@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">MoveList</string>
+    <string name="settings">Налаштування</string>
+
+    <string name="add_in_address_tint">Початкова</string>
+    <string name="add_out_address_tint">Кінцева</string>
+    <string name="add_rec_btn">Записати</string>
+    <string name="cancel">Відміна</string>
+
+    <string name="send">Відправити</string>
+
+    <string name="send_address">отримувач</string>
+    <string name="price">вартість</string>
+    <string name="notification">оповіщення</string>
+    <string name="notification_time">час оповіщення</string>
+
+
+</resources>
