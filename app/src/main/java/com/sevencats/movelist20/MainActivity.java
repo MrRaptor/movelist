@@ -23,13 +23,15 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.sevencats.movelist20.Adapter.MainRecyclerAdapter;
 import com.sevencats.movelist20.Database.MoveDB;
 import com.sevencats.movelist20.Database.TableMoves;
 import com.sevencats.movelist20.Database.TableSendHistory;
 import com.sevencats.movelist20.Listener.MainCardListener;
 import com.sevencats.movelist20.Utils.GPS;
-import com.sevencats.movelist20.Utils.Notification;
+import com.sevencats.movelist20.Notification.Notification;
 import com.sevencats.movelist20.Utils.Utils;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
         //checkSelfPermission
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-
+                Toast.makeText(this,"Надайте права доступу",Toast.LENGTH_SHORT).show();
             } else {
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }

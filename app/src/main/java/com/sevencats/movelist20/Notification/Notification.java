@@ -1,14 +1,15 @@
-package com.sevencats.movelist20.Utils;
+package com.sevencats.movelist20.Notification;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+
 import java.util.Calendar;
 
 public class Notification {
 
-    Context context;
+    private Context context;
 
     public Notification(Context context){
         this.context = context;
@@ -25,10 +26,14 @@ public class Notification {
         calendar.set(Calendar.SECOND, 0);
 
         if (System.currentTimeMillis() <= calendar.getTimeInMillis()) {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+            if (alarmManager != null) {
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+            }
         } else {
             calendar.add(Calendar.DATE, 1);
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+            if (alarmManager != null) {
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+            }
         }
     }
 }

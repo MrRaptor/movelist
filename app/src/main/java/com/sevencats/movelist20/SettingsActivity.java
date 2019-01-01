@@ -1,5 +1,6 @@
 package com.sevencats.movelist20;
 
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +10,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
 import com.sevencats.movelist20.Database.TableSettings;
-import com.sevencats.movelist20.Utils.Notification;
+import com.sevencats.movelist20.Notification.Notification;
 import com.sevencats.movelist20.Utils.Utils;
 
 public class SettingsActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
@@ -23,6 +23,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
     public final static String SAVED_NOTIFICATION_MINUTES = "NotificationMinutes";
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

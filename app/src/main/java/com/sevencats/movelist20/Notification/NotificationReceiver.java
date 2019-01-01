@@ -1,4 +1,4 @@
-package com.sevencats.movelist20.Utils;
+package com.sevencats.movelist20.Notification;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -25,7 +25,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         remoteViews.setImageViewResource(R.id.nLogo, R.drawable.ic_notification_icon);
         remoteViews.setTextViewText(R.id.nTitle, "Увага! є невідправленні проїзди ");
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,null)
                 .setSmallIcon(R.drawable.ic_date_icon)
                 .setCustomContentView(remoteViews)
                 .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
@@ -36,6 +36,8 @@ public class NotificationReceiver extends BroadcastReceiver {
         notification.defaults |= Notification.DEFAULT_SOUND;
         notification.defaults |= Notification.DEFAULT_VIBRATE;
 
-        notificationManager.notify(100, notification);
+        if (notificationManager != null) {
+            notificationManager.notify(100, notification);
+        }
     }
 }
