@@ -18,6 +18,7 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -26,7 +27,8 @@
 
         <receiver android:name=".Notification.NotificationReceiver" />
 
-        <activity android:name=".AnalyticsActivity"/>
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".AnalyticsActivity"></activity>
     </application>
 
 </manifest>

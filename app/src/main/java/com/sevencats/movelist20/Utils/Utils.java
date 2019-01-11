@@ -4,12 +4,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+
 import com.sevencats.movelist20.MainActivity;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Utils {
 
@@ -94,4 +98,27 @@ public class Utils {
         String finalMailText = strBuilder.toString();
         return finalMailText + "\n" + "Загальна сума : " + movesSum + " грн";
     }
+
+   /* private Map<String, Integer> getDataFromCursor(@NonNull Cursor cursor){
+
+        Map<String, Integer> values = new HashMap<>();
+        if (cursor.moveToFirst()) {
+            int date = cursor.getColumnIndex("date");
+            int price = cursor.getColumnIndex("price");
+
+            do {
+                if(values.get(cursor.getString(date))!= null){
+                    values.put(cursor.getString(date),values.get(cursor.getString(date) + (int)cursor.getDouble(price)));
+                }
+                else {
+                    values.put(cursor.getString(date),(int) cursor.getDouble(price));
+                }
+            }
+            while (cursor.moveToNext());
+        }
+        else {
+            cursor.close();
+        }
+        return values;
+    }*/
 }

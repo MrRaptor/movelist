@@ -8,4 +8,12 @@
     <color name="icon_color">#ad1457</color>
     <color name="toolbar_icon_color">#fff</color>
 
+    <color name="colorPie1">#2e78a5</color>
+    <color name="colorPie2">#3a2791</color>
+    <color name="colorPie3">#2ea57f</color>
+    <color name="colorPie4">#2ea551</color>
+    <color name="colorPie5">#6fa52e</color>
+    <color name="colorPie6">#2e93a5</color>
+    <color name="colorPie7">#45667a</color>
+
 </resources>

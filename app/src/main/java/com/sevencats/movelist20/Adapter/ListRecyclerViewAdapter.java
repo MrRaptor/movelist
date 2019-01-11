@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sevencats.movelist20.Adapter.data.ListItem;
 import com.sevencats.movelist20.Listener.ListCardListener;
 import com.sevencats.movelist20.Listener.OnSwipeTouchListener;
 import com.sevencats.movelist20.MainActivity;

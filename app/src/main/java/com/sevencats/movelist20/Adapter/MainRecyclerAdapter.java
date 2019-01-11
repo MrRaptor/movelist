@@ -23,7 +23,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
     public MainRecyclerAdapter(Context context, MainCardListener listener) {
         this.context = context;
-        dateList = MainActivity.db.daoMoves().getDates();
+        dateList = MainActivity.db.daoMoves().getDatesIsForwarded();
         this.listener = listener;
     }
 
@@ -69,7 +69,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
     public void updateList(){
         dateList.clear();
-        dateList = MainActivity.db.daoMoves().getDates();
+        dateList = MainActivity.db.daoMoves().getDatesIsForwarded();
         notifyDataSetChanged();
     }
 }

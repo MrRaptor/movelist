@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MoveList</string>
     <string name="settings">Налаштування</string>
+    <string name="analytics">Статистика</string>
 
     <string name="add_in_address_tint">Початкова</string>
     <string name="add_out_address_tint">Кінцева</string>

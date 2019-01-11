@@ -6,7 +6,7 @@
     android:layout_height="200dp"
     android:background="@null">
 
-    <com.sevencats.movelist20.Utils.MotionToolBar
+    <com.sevencats.movelist20.View.MotionToolBar
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="false"
@@ -33,13 +33,20 @@
             android:src="@drawable/ic_email_24dp"/>
 
         <ImageView
+            android:id="@+id/history_btn"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:transitionName="image"
+            android:src="@drawable/ic_history_white"/>
+
+        <ImageView
             android:id="@+id/analytics_btn"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
             android:transitionName="image"
             android:src="@drawable/ic_analytics_24dp"/>
 
-    </com.sevencats.movelist20.Utils.MotionToolBar>
+    </com.sevencats.movelist20.View.MotionToolBar>
 
 </android.support.design.widget.AppBarLayout>
 

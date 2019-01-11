@@ -1,4 +1,4 @@
-package com.sevencats.movelist20.Utils;
+package com.sevencats.movelist20.View;
 
 import android.content.Context;
 import android.graphics.ColorMatrix;

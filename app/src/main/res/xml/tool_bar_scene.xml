@@ -45,14 +45,26 @@
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
             android:background="@drawable/oval_border_icon"
-            android:scaleX="1.5"
-            android:scaleY="1.5"
+            android:scaleX="1.7"
+            android:scaleY="1.7"
             android:tint="@color/toolbar_icon_color"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="65dp"
             motion:layout_constraintLeft_toRightOf="@id/mail_btn"
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintBottom_toBottomOf="parent" />
+
+        <Constraint
+            android:id="@+id/history_btn"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:scaleX="1.7"
+            android:scaleY="1.7"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            motion:layout_constraintRight_toLeftOf="@id/mail_btn"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintBottom_toBottomOf="@id/analytics_btn" />
 
         <Constraint
             android:id="@+id/analytics_btn"
@@ -60,10 +72,10 @@
             android:layout_height="@dimen/icon_size"
             android:scaleX="1.7"
             android:scaleY="1.7"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
             motion:layout_constraintRight_toLeftOf="@id/mail_btn"
-            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintTop_toTopOf="@id/history_btn"
             motion:layout_constraintBottom_toBottomOf="parent" />
 
     </ConstraintSet>
@@ -105,14 +117,24 @@
             tools:ignore="DuplicateIds" />
 
         <Constraint
-            android:id="@+id/analytics_btn"
+            android:id="@+id/history_btn"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="15dp"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintRight_toLeftOf="@id/settings_btn"
-            tools:ignore="DuplicateIds" >
-        </Constraint>
+            tools:ignore="DuplicateIds" />
+
+        <Constraint
+            android:id="@+id/analytics_btn"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="15dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintRight_toLeftOf="@id/history_btn"
+            tools:ignore="DuplicateIds" />
+
     </ConstraintSet>
 </MotionScene>

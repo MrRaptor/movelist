@@ -1,4 +1,4 @@
-package com.sevencats.movelist20.Adapter;
+package com.sevencats.movelist20.Adapter.data;
 
 import android.database.Cursor;
 

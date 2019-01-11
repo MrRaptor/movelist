@@ -6,6 +6,7 @@ import android.arch.persistence.room.Query;
 import android.database.Cursor;
 
 import java.util.List;
+import java.util.Map;
 
 @Dao
 public interface DaoMoves {
@@ -20,7 +21,10 @@ public interface DaoMoves {
     int getMovesCount();
 
     @Query("select distinct date from Moves where isForwarded = 0 order by date asc")
-    List<String> getDates();
+    List<String> getDatesIsForwarded();
+
+    @Query("select distinct date from Moves order by date asc")
+    List<String> getDatesList();
 
     @Query("select sum(price) from Moves where date = :date ")
     double getDatesSum(String date);

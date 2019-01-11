@@ -35,11 +35,12 @@ import com.sevencats.movelist20.Notification.Notification;
 import com.sevencats.movelist20.Utils.Utils;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements MainCardListener, DatePickerDialog.OnDateSetListener {
 
     private RecyclerView recyclerList;
-    public ImageView mailBtn, settingsBtn, analyticsBtn;
+    public ImageView mailBtn, settingsBtn, historyBtn, analyticsBtn;
     private MainRecyclerAdapter adapter;
     private FloatingActionButton addAddressBtn;
     public static MoveDB db;
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
         addAddressBtn = findViewById(R.id.add_address);
         mailBtn = findViewById(R.id.mail_btn);
         settingsBtn = findViewById(R.id.settings_btn);
+        historyBtn = findViewById(R.id.history_btn);
         analyticsBtn = findViewById(R.id.analytics_btn);
         setupAdapter();
 
@@ -102,6 +104,12 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
                 onClickMailBtn();
             }
         });
+        historyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickHistoryBtn();
+            }
+        });
         analyticsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +117,8 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
             }
         });
     }
+
+
 
     private void setupAdapter() {
         recyclerList = findViewById(R.id.recyclerView);
@@ -205,13 +215,18 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
         startActivity(intent);
     }
 
-    private void onClickAnalyticsBtn() {
-        Intent intent = new Intent(MainActivity.this, AnalyticsActivity.class);
+    private void onClickHistoryBtn() {
+        Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
         Pair[] pairs = new Pair[1];
-        pairs[0] = new Pair<View, String>(analyticsBtn, "image");
+        pairs[0] = new Pair<View, String>(historyBtn, "image");
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, pairs);
         startActivity(intent, options.toBundle());
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    private void onClickAnalyticsBtn() {
+        Intent intent = new Intent(MainActivity.this, AnalyticsActivity.class);
+        startActivity(intent);
     }
 
     private void onClickMailBtn() {

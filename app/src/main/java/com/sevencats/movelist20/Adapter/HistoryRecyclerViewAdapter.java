@@ -12,12 +12,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sevencats.movelist20.Adapter.data.HistoryItem;
 import com.sevencats.movelist20.Listener.HistoryCardListener;
-import com.sevencats.movelist20.Listener.ListCardListener;
 import com.sevencats.movelist20.Listener.OnSwipeTouchListener;
 import com.sevencats.movelist20.MainActivity;
 import com.sevencats.movelist20.R;
-import com.sevencats.movelist20.Utils.Utils;
 
 import static com.sevencats.movelist20.MainActivity.db;
 
