@@ -33,13 +33,6 @@ public class HistoryActivity extends AppCompatActivity implements HistoryCardLis
         recyclerView.setAdapter(adapter);
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        TextView toDay = findViewById(R.id.toDay);
-        MotionLayout analyticsLayout = findViewById(R.id.analytics_layout);
-        String sumToDay = String.valueOf(MainActivity.db.daoMoves().getDatesSum(Utils.getCurrentDate(simpleDateFormat)));
-        toDay.setText("Проїзди за сьогодні: " + sumToDay + " грн");
-        analyticsLayout.transitionToEnd();
     }
 
     @Override

@@ -24,7 +24,6 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.sevencats.movelist20.Adapter.MainRecyclerAdapter;
 import com.sevencats.movelist20.Database.MoveDB;
 import com.sevencats.movelist20.Database.TableMoves;
@@ -35,14 +34,12 @@ import com.sevencats.movelist20.Notification.Notification;
 import com.sevencats.movelist20.Utils.Utils;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements MainCardListener, DatePickerDialog.OnDateSetListener {
 
     private RecyclerView recyclerList;
     public ImageView mailBtn, settingsBtn, historyBtn, analyticsBtn;
     private MainRecyclerAdapter adapter;
-    private FloatingActionButton addAddressBtn;
     public static MoveDB db;
     private GPS gps;
     public final static String SAVED_TEXT_IN_ADDRESS = "saved_in_address";
@@ -52,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        adapter.updateList();
+        adapter.updateList(MainActivity.db.daoMoves().getDatesIsForwarded());
     }
 
     @Override
@@ -79,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
             notification.setNotification(Utils.getIntSharedPref(SettingsActivity.SAVED_NOTIFICATION_HOURS, this), Utils.getIntSharedPref(SettingsActivity.SAVED_NOTIFICATION_MINUTES, this));
         }
 
-        addAddressBtn = findViewById(R.id.add_address);
+        FloatingActionButton addAddressBtn = findViewById(R.id.add_address);
         mailBtn = findViewById(R.id.mail_btn);
         settingsBtn = findViewById(R.id.settings_btn);
         historyBtn = findViewById(R.id.history_btn);
@@ -122,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
 
     private void setupAdapter() {
         recyclerList = findViewById(R.id.recyclerView);
-        adapter = new MainRecyclerAdapter(this, this);
+        adapter = new MainRecyclerAdapter(this, this, db.daoMoves().getDatesIsForwarded());
         recyclerList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerList.setAdapter(adapter);
     }
@@ -138,9 +135,7 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
         ImageView outGPSAddress = dialogView.findViewById(R.id.outGPSAddress);
         Button btnOk = dialogView.findViewById(R.id.ok_btn);
         Button btnCancel = dialogView.findViewById(R.id.cancel_btn);
-        TextView currentDate = dialogView.findViewById(R.id.current_date);
 
-        currentDate.setText(Utils.getCurrentDate(simpleDateFormat));
         inAddress.setText(loadInAddressText());
         outAddress.setText(loadOutAddressText());
 
@@ -197,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
         tableMoves.price = db.daoSettings().getPrice();
         tableMoves.isForwarded = 0;
         db.daoMoves().addMove(tableMoves);
-        adapter.updateList();
+        adapter.updateList(MainActivity.db.daoMoves().getDatesIsForwarded());
     }
 
     private void addRecordToSendHistory(String fromDate, String toDate, String mail, double sum) {
@@ -207,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
         history.mail = mail;
         history.sum = sum;
         db.daoSendHistory().addRecord(history);
-        adapter.updateList();
+        adapter.updateList(MainActivity.db.daoMoves().getDatesIsForwarded());
     }
 
     private void onClickSettingBtn() {
@@ -217,10 +212,7 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
 
     private void onClickHistoryBtn() {
         Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
-        Pair[] pairs = new Pair[1];
-        pairs[0] = new Pair<View, String>(historyBtn, "image");
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, pairs);
-        startActivity(intent, options.toBundle());
+        startActivity(intent);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 

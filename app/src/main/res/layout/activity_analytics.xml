@@ -50,7 +50,6 @@
                 android:textSize="18sp"
                 android:transitionName="date_sum" />
 
-
         </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
@@ -62,5 +61,14 @@
         android:layout_height="220dp"
         android:layout_below="@id/toolbar"
         android:layout_centerInParent="true"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_below="@id/pie_chart"
+        android:layout_margin="10dp">
+
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

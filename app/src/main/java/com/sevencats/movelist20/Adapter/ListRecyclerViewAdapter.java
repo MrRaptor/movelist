@@ -2,6 +2,7 @@ package com.sevencats.movelist20.Adapter;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,9 +23,9 @@ import static com.sevencats.movelist20.MainActivity.db;
 
 public class ListRecyclerViewAdapter extends CursorRecyclerViewAdapter<ListRecyclerViewAdapter.ViewHolder> {
 
-    Context context;
-    ListCardListener listener;
-    Cursor cursor;
+    private Context context;
+    private   ListCardListener listener;
+    private Cursor cursor;
 
     public ListRecyclerViewAdapter(Context context, Cursor cursor, ListCardListener listener) {
         super(context, cursor);
@@ -34,26 +35,26 @@ public class ListRecyclerViewAdapter extends CursorRecyclerViewAdapter<ListRecyc
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView inAddress;
-        public TextView outAddress;
-        public CardView card_view;
-        public ImageView removeCard;
+        private TextView inAddress,outAddress ;
+        private CardView card_view;
+        private ImageView removeCard, copyCard;
 
-        public ViewHolder(View view) {
+        private ViewHolder(View view) {
             super(view);
             inAddress = view.findViewById(R.id.inAddress);
             outAddress = view.findViewById(R.id.outAddress);
             card_view = view.findViewById(R.id.card);
             removeCard = view.findViewById(R.id.delete_card_btn);
+            copyCard = view.findViewById(R.id.copy_card_btn);
         }
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_card_view, parent, false);
-        ViewHolder vh = new ViewHolder(itemView);
-        return vh;
+        return new ViewHolder(itemView);
     }
 
     @Override
@@ -63,6 +64,12 @@ public class ListRecyclerViewAdapter extends CursorRecyclerViewAdapter<ListRecyc
         viewHolder.inAddress.setText(myItem.getInAddress());
         viewHolder.outAddress.setText(myItem.getOutAddress());
 
+        viewHolder.copyCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onCopyCard(myItem.getId(),myItem.getInAddress(),myItem.getOutAddress(),myItem.getDate(),1);
+            }
+        });
 
         viewHolder.removeCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +82,7 @@ public class ListRecyclerViewAdapter extends CursorRecyclerViewAdapter<ListRecyc
         viewHolder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onClickCard(myItem.getId(),myItem.getInAddress(),myItem.getOutAddress(),myItem.getDate());
+                listener.onClickCard(myItem.getId(),myItem.getInAddress(),myItem.getOutAddress(),myItem.getDate(),  0);
             }
         });
 

@@ -36,7 +36,6 @@
             android:id="@+id/history_btn"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
-            android:transitionName="image"
             android:src="@drawable/ic_history_white"/>
 
         <ImageView

@@ -43,12 +43,6 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
         email.setText(MainActivity.db.daoSettings().getMail());
         price.setText(Double.toString(MainActivity.db.daoSettings().getPrice()));
 
-        backArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
         tvTime = findViewById(R.id.tvTime);
         tvTime.setText(String.valueOf(Utils.getIntSharedPref(SettingsActivity.SAVED_NOTIFICATION_HOURS, this)) + " : " + Utils.getIntSharedPref(SettingsActivity.SAVED_NOTIFICATION_MINUTES, this));
         tvTime.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +50,13 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
             public void onClick(View v) {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(SettingsActivity.this, R.style.TimePicker, SettingsActivity.this, 0, 10, true);
                 timePickerDialog.show();
+            }
+        });
+
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }

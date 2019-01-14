@@ -29,6 +29,9 @@ public interface DaoMoves {
     @Query("select sum(price) from Moves where date = :date ")
     double getDatesSum(String date);
 
+    @Query("select price from Moves where _id = :id ")
+    double getPriceFromID(long id);
+
     @Query("select * from Moves where date = :date ")
     Cursor getDateMoves(String date);
 

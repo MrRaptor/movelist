@@ -6,6 +6,7 @@
     <string name="add_in_address_tint">Початкова</string>
     <string name="add_out_address_tint">Кінцева</string>
     <string name="add_rec_btn">Записати</string>
+    <string name="update_btn">Зберегти</string>
     <string name="cancel">Відміна</string>
 
     <string name="send">Відправити</string>
