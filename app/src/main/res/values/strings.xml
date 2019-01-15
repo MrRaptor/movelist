@@ -16,5 +16,8 @@
     <string name="notification">оповіщення</string>
     <string name="notification_time">час оповіщення</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

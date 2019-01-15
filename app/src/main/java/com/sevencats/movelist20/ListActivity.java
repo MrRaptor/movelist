@@ -55,7 +55,7 @@ public class ListActivity extends AppCompatActivity implements ListCardListener 
         snapHelper.attachToRecyclerView(recyclerView);
 
         moveDate.setText(cardDate);
-        dateSum.setText(Double.toString(MainActivity.db.daoMoves().getDatesSum(cardDate)));
+        calculateDayCost();
     }
 
 
@@ -63,7 +63,7 @@ public class ListActivity extends AppCompatActivity implements ListCardListener 
     /** ListCardListener */
     @Override
     public void onDeleteCard() {
-       calculateDaySum();
+       calculateDayCost();
     }
 
     /** flag = 1  copy moves to another date */
@@ -129,7 +129,7 @@ public class ListActivity extends AppCompatActivity implements ListCardListener 
                     copyCard(id,dialogInAddress.getText().toString(),dialogOutAddress.getText().toString(), dialogDate.getText().toString());
                 }
                 dialog.dismiss();
-                calculateDaySum();
+                calculateDayCost();
                 adapter.updateMoves(MainActivity.db.daoMoves().getDateMoves(cardDate));
             }
         });
@@ -156,9 +156,9 @@ public class ListActivity extends AppCompatActivity implements ListCardListener 
         MainActivity.db.daoMoves().updateRec(inAddress,outAddress,date,id);
     }
 
-    private void calculateDaySum(){
+    private void calculateDayCost(){
         Double sumOfDay = MainActivity.db.daoMoves().getDatesSum(cardDate);
-        dateSum.setText(Double.toString(sumOfDay));
+        dateSum.setText(Utils.dateCostFormat(sumOfDay) + " грн");
         if( sumOfDay == 0) {
             super.onBackPressed();
         }

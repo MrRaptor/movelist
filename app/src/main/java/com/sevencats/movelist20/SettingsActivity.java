@@ -44,7 +44,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
         price.setText(Double.toString(MainActivity.db.daoSettings().getPrice()));
 
         tvTime = findViewById(R.id.tvTime);
-        tvTime.setText(String.valueOf(Utils.getIntSharedPref(SettingsActivity.SAVED_NOTIFICATION_HOURS, this)) + " : " + Utils.getIntSharedPref(SettingsActivity.SAVED_NOTIFICATION_MINUTES, this));
+        tvTime.setText(Utils.timeFormat(Utils.getIntSharedPref(SettingsActivity.SAVED_NOTIFICATION_HOURS, this), Utils.getIntSharedPref(SettingsActivity.SAVED_NOTIFICATION_MINUTES, this)));
         tvTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +76,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        tvTime.setText(String.valueOf(hourOfDay) + " : " + String.valueOf(minute));
+        tvTime.setText(Utils.timeFormat(hourOfDay,minute));
         setNotification(hourOfDay, minute);
     }
 }

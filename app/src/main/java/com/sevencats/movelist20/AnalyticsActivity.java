@@ -3,6 +3,7 @@ package com.sevencats.movelist20;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -59,7 +60,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MainCardList
         });
     }
 
-    private void setupPieChart(){
+    private void setupPieChart() {
         PieChart pieChart = findViewById(R.id.pie_chart);
         pieChart.setUsePercentValues(true);
         pieChart.getDescription().setEnabled(false);
@@ -99,7 +100,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MainCardList
         pieChart.setData(data);
     }
 
-    private List<Integer> getChartColors(){
+    private List<Integer> getChartColors() {
         List<Integer> colors = new ArrayList<>();
 
         colors.add(getResources().getColor(R.color.colorPie1));
@@ -113,7 +114,9 @@ public class AnalyticsActivity extends AppCompatActivity implements MainCardList
         return colors;
     }
 
-    /**  return list of unique date cost  */
+    /**
+     * return list of unique date cost
+     */
     private HashSet<Integer> getUniqueDateCost() {
         HashSet<Integer> uniqueCost = new HashSet<>();
 
@@ -123,9 +126,12 @@ public class AnalyticsActivity extends AppCompatActivity implements MainCardList
         return uniqueCost;
     }
 
-    /** return data for PieChart  */
+    /**
+     * return data for PieChart
+     */
     private Map<Integer, Integer> getDataSet() {
-        Map<Integer, Integer> data = new HashMap<>();
+        final Map<Integer, Integer> data = new HashMap<>();
+
         for (Integer cost : getUniqueDateCost()) {
             int count = 0;
             for (String date : MainActivity.db.daoMoves().getDatesList()) {
@@ -138,7 +144,9 @@ public class AnalyticsActivity extends AppCompatActivity implements MainCardList
         return data;
     }
 
-    /** return date list for selected cost  */
+    /**
+     * return date list for selected cost
+     */
     private List<String> getDatesList(Integer dateCost) {
         List<String> list = new ArrayList<>();
         for (String date : MainActivity.db.daoMoves().getDatesList()) {

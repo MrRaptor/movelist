@@ -30,6 +30,23 @@ public class Utils {
         return StrDay + "." + StrMonth + "." + String.valueOf(year);
     }
 
+    public static String timeFormat(int hours , int minute){
+        if(String.valueOf(minute).length() == 1){
+            return String.valueOf(hours) + " : " + "0" + String.valueOf(minute);
+        }
+        else
+            return String.valueOf(hours) + " : "  + String.valueOf(minute);
+    }
+
+    public static String dateCostFormat(double cost){
+        {
+            if(cost == (long) cost)
+                return String.format("%d",(long)cost);
+            else
+                return String.format("%s",cost);
+        }
+    }
+
     public static String getCurrentDate(SimpleDateFormat simpleDateFormat) {
         Date d = new Date();
         Calendar c = Calendar.getInstance();
