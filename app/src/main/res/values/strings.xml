@@ -2,6 +2,7 @@
     <string name="app_name">MoveList</string>
     <string name="settings">Налаштування</string>
     <string name="analytics">Статистика</string>
+    <string name="history">Історія</string>
 
     <string name="add_in_address_tint">Початкова</string>
     <string name="add_out_address_tint">Кінцева</string>
@@ -15,9 +16,6 @@
     <string name="price">вартість</string>
     <string name="notification">оповіщення</string>
     <string name="notification_time">час оповіщення</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

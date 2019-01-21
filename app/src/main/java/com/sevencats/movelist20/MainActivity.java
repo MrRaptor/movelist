@@ -208,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
     private void onClickSettingBtn() {
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     private void onClickHistoryBtn() {
@@ -219,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
     private void onClickAnalyticsBtn() {
         Intent intent = new Intent(MainActivity.this, AnalyticsActivity.class);
         startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     private void onClickMailBtn() {

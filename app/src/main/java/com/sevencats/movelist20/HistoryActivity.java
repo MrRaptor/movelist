@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sevencats.movelist20.Adapter.HistoryRecyclerViewAdapter;
@@ -19,20 +21,26 @@ import java.text.SimpleDateFormat;
 
 public class HistoryActivity extends AppCompatActivity implements HistoryCardListener {
 
-    private RecyclerView recyclerView;
-    private HistoryRecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        recyclerView = findViewById(R.id.recycler_history);
-        adapter = new HistoryRecyclerViewAdapter(this, MainActivity.db.daoSendHistory().getSendHistory(), this);
+        RecyclerView recyclerView = findViewById(R.id.recycler_history);
+        HistoryRecyclerViewAdapter adapter = new HistoryRecyclerViewAdapter(this, MainActivity.db.daoSendHistory().getSendHistory(), this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
+
+        ImageView back_btn = findViewById(R.id.back_arrow);
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override

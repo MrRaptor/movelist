@@ -7,12 +7,15 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
 import com.sevencats.movelist20.MainActivity;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class Utils {
@@ -30,20 +33,19 @@ public class Utils {
         return StrDay + "." + StrMonth + "." + String.valueOf(year);
     }
 
-    public static String timeFormat(int hours , int minute){
-        if(String.valueOf(minute).length() == 1){
+    public static String timeFormat(int hours, int minute) {
+        if (String.valueOf(minute).length() == 1) {
             return String.valueOf(hours) + " : " + "0" + String.valueOf(minute);
-        }
-        else
-            return String.valueOf(hours) + " : "  + String.valueOf(minute);
+        } else
+            return String.valueOf(hours) + " : " + String.valueOf(minute);
     }
 
-    public static String dateCostFormat(double cost){
+    public static String dateCostFormat(double cost) {
         {
-            if(cost == (long) cost)
-                return String.format("%d",(long)cost);
+            if (cost == (long) cost)
+                return String.format("%d", (long) cost);
             else
-                return String.format("%s",cost);
+                return String.format("%s", cost);
         }
     }
 
@@ -54,14 +56,14 @@ public class Utils {
         return simpleDateFormat.format(c.getTime());
     }
 
-    public static void setStringSharedPref(String key, String value, Context context){
+    public static void setStringSharedPref(String key, String value, Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(key, value);
         editor.apply();
     }
 
-    public static void setIntSharedPref(String key, int value, Context context){
+    public static void setIntSharedPref(String key, int value, Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(key, value);
@@ -78,7 +80,7 @@ public class Utils {
         return preferences.getInt(key, 0);
     }
 
-    public static String getMoves (String fromDate, String toDate){
+    public static String getMoves(String from, String to) {
         ArrayList<String> mailAddress = new ArrayList<>();
         Cursor cursor = MainActivity.db.daoMoves().getMoves();
         movesSum = 0;
@@ -89,13 +91,13 @@ public class Utils {
             int DateIndex = cursor.getColumnIndex("date");
             int PriceIndex = cursor.getColumnIndex("price");
             do {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
                 Date d;
                 try {
                     d = dateFormat.parse(cursor.getString(DateIndex));
-                    Date filterDate = dateFormat.parse(fromDate);
-                    Date filterDateTo = dateFormat.parse(toDate);
-                    if (d.getTime() >= filterDate.getTime() && d.getTime() <= filterDateTo.getTime()) {
+                    Date dateFrom = dateFormat.parse(from);
+                    Date dateTo = dateFormat.parse(to);
+                    if (d.getTime() >= dateFrom.getTime() && d.getTime() <= dateTo.getTime()) {
                         MainActivity.db.daoMoves().forwarded(cursor.getLong(id));
                         mailAddress.add(cursor.getString(DateIndex) + " " + cursor.getString(firstAddressIndex) + " - " + cursor.getString(lastAddressIndex) + " " + cursor.getDouble(PriceIndex) + "  грн");
                         movesSum = movesSum + cursor.getDouble(PriceIndex);
@@ -115,6 +117,42 @@ public class Utils {
         String finalMailText = strBuilder.toString();
         return finalMailText + "\n" + "Загальна сума : " + movesSum + " грн";
     }
+
+    /**
+     * check if date entrance in period
+     */
+
+    public static List<String> ifDateEntrance(String from, String to) throws ParseException {
+        List<String> dateList = new ArrayList<>();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        Date dateFrom = dateFormat.parse(from);
+        Date dateTo = dateFormat.parse(to);
+
+        for (String date : MainActivity.db.daoMoves().getDatesList()) {
+            Date d = dateFormat.parse(date);
+            if(d.getTime() >= dateFrom.getTime() && d.getTime() <= dateTo.getTime()){
+                dateList.add(date);
+            }
+        }
+        return dateList;
+    }
+
+    public static double sumOfPeriod(String from, String to) throws ParseException {
+        double sum = 0;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        Date dateFrom = dateFormat.parse(from);
+        Date dateTo = dateFormat.parse(to);
+
+        for (String date : MainActivity.db.daoMoves().getDatesList()) {
+            Date d = dateFormat.parse(date);
+            if(d.getTime() >= dateFrom.getTime() && d.getTime() <= dateTo.getTime()){
+                sum += MainActivity.db.daoMoves().getDatesSum(date);
+            }
+        }
+        return sum;
+    }
+
+
 
    /* private Map<String, Integer> getDataFromCursor(@NonNull Cursor cursor){
 

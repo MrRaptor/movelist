@@ -14,16 +14,16 @@ public interface DaoMoves {
     @Insert
     void addMove (TableMoves table);
 
-    @Query("select * from Moves order by date asc")
+    @Query("select * from Moves order by date desc")
     Cursor getMoves();
 
     @Query("select count(_id) from Moves where isForwarded = 0")
     int getMovesCount();
 
-    @Query("select distinct date from Moves where isForwarded = 0 order by date asc")
+    @Query("select distinct date from Moves where isForwarded = 0 order by date desc")
     List<String> getDatesIsForwarded();
 
-    @Query("select distinct date from Moves order by date asc")
+    @Query("select distinct date from Moves order by date desc")
     List<String> getDatesList();
 
     @Query("select sum(price) from Moves where date = :date ")

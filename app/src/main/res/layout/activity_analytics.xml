@@ -68,34 +68,47 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@id/pie_chart"
-        android:layout_margin="10dp">
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="10dp">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:alpha="0.5"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            android:background="@color/colorPrimary"/>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/bnt_pie_filter"
+        <TextView
+            android:id="@+id/analytics_legend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_gravity="bottom"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="7dp"
+            android:layout_weight="1">
+        </TextView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btn_pie_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
             android:src="@drawable/ic_pie_icon"/>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:alpha="0.5"
+        android:layout_below="@id/floating_btn_container"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@color/colorPrimary"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_below="@id/floating_btn_container"
-        android:layout_margin="10dp">
+        android:layout_margin="15dp">
 
     </android.support.v7.widget.RecyclerView>
 
