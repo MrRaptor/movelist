@@ -24,7 +24,7 @@ import static com.sevencats.movelist20.MainActivity.db;
 public class ListRecyclerViewAdapter extends CursorRecyclerViewAdapter<ListRecyclerViewAdapter.ViewHolder> {
 
     private Context context;
-    private   ListCardListener listener;
+    private ListCardListener listener;
     private Cursor cursor;
 
     public ListRecyclerViewAdapter(Context context, Cursor cursor, ListCardListener listener) {

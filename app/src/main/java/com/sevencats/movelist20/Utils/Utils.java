@@ -151,29 +151,4 @@ public class Utils {
         }
         return sum;
     }
-
-
-
-   /* private Map<String, Integer> getDataFromCursor(@NonNull Cursor cursor){
-
-        Map<String, Integer> values = new HashMap<>();
-        if (cursor.moveToFirst()) {
-            int date = cursor.getColumnIndex("date");
-            int price = cursor.getColumnIndex("price");
-
-            do {
-                if(values.get(cursor.getString(date))!= null){
-                    values.put(cursor.getString(date),values.get(cursor.getString(date) + (int)cursor.getDouble(price)));
-                }
-                else {
-                    values.put(cursor.getString(date),(int) cursor.getDouble(price));
-                }
-            }
-            while (cursor.moveToNext());
-        }
-        else {
-            cursor.close();
-        }
-        return values;
-    }*/
 }
