@@ -41,10 +41,18 @@
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
             android:layout_gravity="center"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:background="?selectableItemBackgroundBorderless"
             android:src="@drawable/ic_add_location_24dp" />
+
+        <ImageView
+            android:id="@+id/ticketPhoto"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_add_ticket_24dp" />
 
     </LinearLayout>
 
@@ -69,10 +77,11 @@
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
             android:layout_gravity="center"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="34dp"
             android:background="?selectableItemBackgroundBorderless"
             android:src="@drawable/ic_add_location_24dp" />
+
     </LinearLayout>
 
     <LinearLayout

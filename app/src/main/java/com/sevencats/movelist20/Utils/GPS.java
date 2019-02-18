@@ -20,7 +20,7 @@ import java.util.List;
 
 public class GPS implements LocationListener {
 
-    Context context;
+    private Context context;
 
     public GPS(Context context) {
         this.context = context;

@@ -5,10 +5,15 @@ import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.arch.persistence.room.Room;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -24,6 +29,7 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.sevencats.movelist20.Adapter.MainRecyclerAdapter;
 import com.sevencats.movelist20.Database.MoveDB;
 import com.sevencats.movelist20.Database.TableMoves;
@@ -32,19 +38,27 @@ import com.sevencats.movelist20.Listener.MainCardListener;
 import com.sevencats.movelist20.Utils.GPS;
 import com.sevencats.movelist20.Notification.Notification;
 import com.sevencats.movelist20.Utils.Utils;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements MainCardListener, DatePickerDialog.OnDateSetListener {
 
     private RecyclerView recyclerList;
-    public ImageView mailBtn, settingsBtn, historyBtn, analyticsBtn;
     private MainRecyclerAdapter adapter;
     public static MoveDB db;
     private GPS gps;
     public final static String SAVED_TEXT_IN_ADDRESS = "saved_in_address";
     public final static String SAVED_TEXT_OUT_ADDRESS = "saved_out_address";
-    public TextView currentDatePickerView;
+    private TextView currentDatePickerView;
 
     @Override
     protected void onPostResume() {
@@ -60,11 +74,19 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
         //checkSelfPermission
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                Toast.makeText(this,"Надайте права доступу",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Надайте права доступу", Toast.LENGTH_SHORT).show();
             } else {
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
         }
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            } else {
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
+        }
+
         gps = new GPS(this);
 
         //DataBase
@@ -77,10 +99,10 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
         }
 
         FloatingActionButton addAddressBtn = findViewById(R.id.add_address);
-        mailBtn = findViewById(R.id.mail_btn);
-        settingsBtn = findViewById(R.id.settings_btn);
-        historyBtn = findViewById(R.id.history_btn);
-        analyticsBtn = findViewById(R.id.analytics_btn);
+        ImageView mailBtn = findViewById(R.id.mail_btn);
+        ImageView settingsBtn = findViewById(R.id.settings_btn);
+        ImageView historyBtn = findViewById(R.id.history_btn);
+        ImageView analyticsBtn = findViewById(R.id.analytics_btn);
         setupAdapter();
 
         addAddressBtn.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
     }
 
 
-
     private void setupAdapter() {
         recyclerList = findViewById(R.id.recyclerView);
         adapter = new MainRecyclerAdapter(this, this, db.daoMoves().getDatesIsForwarded());
@@ -127,12 +148,12 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
     private void showAddRecordDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = getLayoutInflater();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd");
         final View dialogView = inflater.inflate(R.layout.dialog_add_address, null);
         final TextView inAddress = dialogView.findViewById(R.id.inAddress);
         final TextView outAddress = dialogView.findViewById(R.id.outAddress);
         ImageView inGPSAddress = dialogView.findViewById(R.id.inGPSAddress);
         ImageView outGPSAddress = dialogView.findViewById(R.id.outGPSAddress);
+        ImageView ticketPhoto = dialogView.findViewById(R.id.ticketPhoto);
         Button btnOk = dialogView.findViewById(R.id.ok_btn);
         Button btnCancel = dialogView.findViewById(R.id.cancel_btn);
 
@@ -175,10 +196,19 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
                 inAddress.setText(gps.getAddress());
             }
         });
+
         outGPSAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 outAddress.setText(gps.getAddress());
+            }
+        });
+
+        ticketPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makePhoto();
+
             }
         });
     }
@@ -266,12 +296,20 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
 
                 String mail = db.daoSettings().getMail();
                 String[] receiver = mail.trim().split(", ");
-                Intent intent = new Intent(Intent.ACTION_SEND);
+                Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
                 intent.setData(Uri.parse("mailto:"));
                 intent.putExtra(Intent.EXTRA_EMAIL, receiver);
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Проїзди ");
                 intent.putExtra(Intent.EXTRA_TEXT, Utils.getMoves(fromDate.getText().toString(), toDate.getText().toString()));
                 intent.setType("massage/rfc822");
+
+                try {
+                    intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, Utils.getTickets(fromDate.getText().toString(), toDate.getText().toString()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
                 Intent chooser = Intent.createChooser(intent, "Send mail");
                 startActivity(chooser);
 
@@ -296,6 +334,64 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, pairs);
         startActivity(intent, options.toBundle());
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    //Make photo ticket
+    private void makePhoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, 0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            SaveImage(photo);
+        }
+    }
+
+    private File createFile(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy_HH:mm");
+        String fileName = Utils.getCurrentDate(simpleDateFormat) + ".png";
+        final String appDirectoryName = "MoveList";
+        final File imageRoot = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), appDirectoryName);
+
+        imageRoot.mkdirs();
+        return new File(imageRoot, fileName);
+    }
+
+    //Save image
+    private void SaveImage(Bitmap bitmap) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy_HH:mm");
+        OutputStream fOut = null;
+        File file = createFile();
+
+        try {
+            fOut = new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+        try {
+            fOut.flush();
+            fOut.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, Utils.getCurrentDate(simpleDateFormat));
+        values.put(MediaStore.Images.Media.DESCRIPTION, Utils.getCurrentDate(simpleDateFormat));
+        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+        values.put(MediaStore.Images.ImageColumns.BUCKET_ID, file.toString().toLowerCase(Locale.US).hashCode());
+        values.put(MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME, file.getName().toLowerCase(Locale.US));
+        values.put("_data", file.getAbsolutePath());
+
+        ContentResolver cr = getContentResolver();
+        cr.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
     }
 
     // Save address when dialog dismiss
@@ -323,5 +419,5 @@ public class MainActivity extends AppCompatActivity implements MainCardListener,
         currentDatePickerView.setText(Utils.getDateFormat(dayOfMonth, month, year));
     }
 }
-
+  
 
